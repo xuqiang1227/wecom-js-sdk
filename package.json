@@ -20,8 +20,8 @@
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
-    "dist": "rimraf ./dist && webpack -p",
-    "analyze": "webpack --profile --json > stats.json"
+    "dist": "rimraf ./dist && tsc -d && webpack -p",
+    "analyze": "webpack --profile --json > status.json"
   },
   "peerDependencies": {}
 }

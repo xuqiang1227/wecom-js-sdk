@@ -35,7 +35,7 @@ const wxConfig = (props: TicketsType, _jsApiList?: string[]) => {
   _jsApiList = _jsApiList ? _jsApiList.concat(jsApiList) : jsApiList;
   wx.config({
     beta: true,
-    debug: false,
+    debug: !!window.__wxComDebug,
     appId: props.corpId,
     timestamp: timestamp,
     nonceStr: nonceStr,
@@ -73,9 +73,8 @@ export const getReferTickets = async ()
   }
   // const res = await request.get(`${FETCH_JSAPI_TICKETS}?corpId=${_corpId}`);
   // const tickets = (res && res.data) || {};
-  const { ticketsUrl } = getAuthContextType() as AuthContextType;
   const { fetchTicket } = getFetchDataFunction();
-  const tickets = await fetchTicket(`${ticketsUrl}?corpId=${_corpId}`);
+  const tickets = await fetchTicket(_corpId);
   setTicketsStorage(tickets);
   return tickets;
 
@@ -87,11 +86,9 @@ export const getReferUser = async () => {
   if (!_corpId || !code) {
     return Promise.reject('corpId or code is not find!');
   }
-  const { userUrl } = getAuthContextType() as AuthContextType;
-  const url = `${userUrl}?corpId=${_corpId}&jsCode=${code}`;
   // const result = await request.get(url);
   const { fetchUser } = getFetchDataFunction();
-  const result = await fetchUser(url);
+  const result = await fetchUser(_corpId, code);
   setWeComUser(result);
   return result;
 };

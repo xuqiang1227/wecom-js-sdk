@@ -19,7 +19,7 @@ web解析该地址，然后访问企业微信的认证地址。通过重定向�
 
 * 配置第三方应用
 
-在企业管理管理页面创建第三方应用，然后创建侧边框。配置：`http://t9mvyd.39nat.com?corpId=wwc0ff211cf0a76527`
+在企业管理管理页面创建第三方应用，然后创建侧边框。配置：`http://t9mvyd.39nat.com?corpId=APPID`
 
 这里我的做法是将 `corpId` 直接配置进去。在web的入口 `index.ts` 中解析。
 
@@ -57,10 +57,73 @@ window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appi
 
 ## 如何使用
 
- * `setAuthContext` 设置必须的属性。获取 `tickets` 的 `url` 以及获取用户信息的 `url`
+ * `setAuthContext` 设置必须的属性。
+
+    |参数|说明|是否必填|默认值|
+    |----|-----|----|-----|
+    |weComBaseUrl|企业微信的认证地址|否|`https://open.weixin.qq.com/connect/oauth2/authorize`|
+    |redirectUrl| 回调地址(一般是系统的入口) | 否| `window.location.href`|
+    |authScope|企业微信参数|否|`snsapi_userinfo`|
+    |nonceStr|企业微信参数|否|`@_weCom_js_sdk_app`|
+    |timestamp|企业微信参数|否|`Date.now()`|
+    |jsApiList|企业微信参数|否|`['invoke']`|
+
+    例如：
+
+    ```js
+    import { setAuthContext } from 'weCom-js-jdk';
+
+    setAuthContext({
+      jsApiList(['chooseImage']);
+    })
+    ```
 
  * `registerFetchDataFunction` 注册获取`tickets`和`userInfo`的方法。
 
- * 在页面入口中调用 `getWeComCode`, `getReferTickets`, `getReferUser` 方法
+ 通过这个方法，将系统后台实现的获取tickets 和 用户信息的方法注册进去。
 
- * 在需要认证的页面 调用 `doAuth` 方法
+ 需要定义两个方法：
+
+  `getTicket = (corpId) => {//系统自己实现}`
+
+  `getUserInfo = (corpId, code) => {//系统自己实现}`,其中 `code` 就是由企业微信返回
+
+  然后将这两个方法注册给js-sdk:
+
+  ```js
+    import { registerFetchDataFunction } from 'weCom-js-sdk';
+    registerFetchDataFunction({
+      fetchTicket: getTicket,
+      fetchUser: getUserInfo
+    });
+  ```
+
+ * 在页面入口中调用 `weComStart` 方法
+
+  ```js
+  import { weComStart } from 'weCom-js-sdk';
+
+  weComStart();
+
+  ```
+ >另外还可以在页面入口中单独调用 `getWeComCode`, `getReferTickets`, `getReferUser` 方法
+
+ * 在需要认证的页面 调用 `doAuth` 方法, 不同的页面，都需要调用.
+
+
+ ## Debug
+
+  在运行过程中可开启 `wx.config` 中的 debug.
+
+  ```js
+  import { openDebug } from 'wxCom-js-sdk';
+
+  // 在入口的地方调用 
+  openDebug((result) => {
+      // true 为开启， false 关闭。提示使用
+      if(result) {
+        Toast.info('debug 模式开启')
+      } 
+    });
+  ```
+  > 你可以在一直打开debug。因为启用的时候，需要双击页面8次，否则debug还是无法开启。
