@@ -1,1 +1,1 @@
-module.exports = "./dist/weCom.js"
+module.exports = "./dist/index.js"
