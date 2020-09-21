@@ -1,6 +1,6 @@
 # 企业微信JS SDK认证
 
-## 流程
+## 说明
 
 点击侧边栏入口的url -> 访问到web端的一个地址。
 
@@ -55,7 +55,7 @@ window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appi
 
   所以在进入每个页面时，我们单独调用 `wx.config` 和 `wx.agentConfig`.
 
-## 如何使用
+## 接口、api说明
 
  * `setAuthContext` 设置必须的属性。
 
@@ -71,7 +71,7 @@ window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appi
     例如：
 
     ```js
-    import { setAuthContext } from 'weCom-js-jdk';
+    import { setAuthContext } from 'wxcom-js-jdk';
 
     setAuthContext({
       jsApiList(['chooseImage']);
@@ -91,7 +91,7 @@ window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appi
   然后将这两个方法注册给js-sdk:
 
   ```js
-    import { registerFetchDataFunction } from 'weCom-js-sdk';
+    import { registerFetchDataFunction } from 'wxcom-js-sdk';
     registerFetchDataFunction({
       fetchTicket: getTicket,
       fetchUser: getUserInfo
@@ -116,7 +116,7 @@ window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appi
   在运行过程中可开启 `wx.config` 中的 debug.
 
   ```js
-  import { openDebug } from 'wxCom-js-sdk';
+  import { openDebug } from 'wxcom-js-sdk';
 
   // 在入口的地方调用 
   openDebug((result) => {
@@ -127,3 +127,53 @@ window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appi
     });
   ```
   > 你可以在一直打开debug。因为启用的时候，需要双击页面8次，否则debug还是无法开启。
+
+ ## 使用
+
+ 1、`yarn add wecom-js-sdk`;
+
+ 2、在项目入口的地方，比如`index.js`中：
+
+  ```js
+
+  import { setAuthContext, registerFetchDataFunction, weComStart, openDebug } from 'wecom-js-sdk';
+  import { getTicket, getUserInfo } from './service'; // 从本地引入自已定义的方法，一般由后端提供数据
+
+  setAuthContext({});
+  registerFetchDataFunction({
+      fetchTicket: getTicket,
+      fetchUser: getUserInfo
+    });
+
+  weComStart();
+
+  openDebug(); // 建议常开。系统稳定后，就可以不用了。
+
+  ```
+
+  3、在需要调用 wx.xxxx 的页面进行认证
+
+  ```js
+  import { doAuth } from 'wecom-js-sdk';
+  
+  const jsApiList = ['chooseImage']; // 在这里定义当前页面所需要的jsApiList
+
+  doAuth(jsApiList);
+
+  ```
+
+至此，一个普通的认证就完成了。
+
+如果项目其他的地方需要签名和用户信息时，有两种办法：
+
+ * `const [tickets, userInfo] = await weComStart()`; 
+
+    或者 
+
+   `weComStart().then(props => {// tickets = props[0], userInfo = props[1]})`
+
+ * 可以直接调用内方法
+
+    ```js
+    import { getReferTickets, getReferUser } from 'wecom-js-sdk';
+    ```
