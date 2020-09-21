@@ -1,6 +1,6 @@
 {
-  "name": "xsy-h5-wxauth",
-  "version": "0.0.2",
+  "name": "weCom-js-sdk",
+  "version": "0.0.1",
   "description": "weChat auth for H5",
   "main": "index.js",
   "author": "xuqiang@xiaoshouyi.com",
