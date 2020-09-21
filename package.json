@@ -1,14 +1,24 @@
 {
-  "name": "weCom-js-sdk",
+  "name": "wecom-js-sdk",
   "version": "0.0.1",
   "description": "weChat auth for H5",
   "main": "index.js",
-  "author": "xuqiang@xiaoshouyi.com",
+  "author": "xuqiang",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuqiang1227/weCom-js-sdk.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "企业微信",
+    "js-sdk",
+    "企业微信 js-sdk H5 集成"
+  ],
   "dependencies": {
-    "axios": "^0.20.0",
-    "js-sha1": "^0.6.0",
-    "query-string": "^6.13.1"
+    "js-sha1": "^0.6.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.13",
@@ -23,5 +33,8 @@
     "dist": "rimraf ./dist && tsc -d && webpack -p",
     "analyze": "webpack --profile --json > status.json"
   },
-  "peerDependencies": {}
+  "peerDependencies": {},
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
 }
