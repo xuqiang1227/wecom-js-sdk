@@ -180,3 +180,5 @@ window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appi
     ```js
     import { getReferTickets, getReferUser } from 'wecom-js-sdk';
     ```
+
+> 最后，别忘记在你的html页面中引入 https://res.wx.qq.com/open/js/jweixin-1.2.0.js ！！！
