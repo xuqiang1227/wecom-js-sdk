@@ -104,7 +104,7 @@ window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appi
  * 在页面入口中调用 `weComStart` 方法
 
   ```js
-  import { weComStart } from 'weCom-js-sdk';
+  import { weComStart } from 'wecom-js-sdk';
 
   weComStart();
 
