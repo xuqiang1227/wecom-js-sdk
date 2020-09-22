@@ -1,5 +1,8 @@
 # 企业微信JS SDK认证
 
+[![npm](https://img.shields.io/npm/v/wecom-js-sdk.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/wecom-js-sdk)
+[![NPM downloads](http://img.shields.io/npm/dm/wecom-js-sdk.svg?style=flat-plastic)](https://npmjs.org/package/wecom-js-sdk)
+
 ## 说明
 
 点击侧边栏入口的url -> 访问到web端的一个地址。
