@@ -3,11 +3,14 @@ import { TicketsType, anyObject, getWeComUser, AuthContextType, setAuthContextTy
 
 import { doAuth, getWeComCode, getReferTickets, getReferUser } from './weComAppAuth';
 
+import { getTickets } from './ticketsSessionStorage';
+
 export { openDebug } from './utils';
 
 export {
-  TicketsType, anyObject, getWeComUser, AuthContextType, setAuthContextType, getAuthContextType, registerFetchDataFunction,
-  doAuth, getWeComCode, getReferTickets, getReferUser
+  TicketsType, anyObject, AuthContextType, setAuthContextType, getAuthContextType, registerFetchDataFunction,
+  doAuth, getWeComCode, getReferTickets, getReferUser,
+  getTickets, getWeComUser
 }
 
 export const weComStart = async (_corpId?: string) => {

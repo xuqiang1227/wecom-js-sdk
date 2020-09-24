@@ -1,6 +1,6 @@
 {
   "name": "wecom-js-sdk",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "weChat auth for H5",
   "main": "index.js",
   "author": "xuqiang",
